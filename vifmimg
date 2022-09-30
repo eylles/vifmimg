@@ -31,32 +31,32 @@ main() {
 			;;
         "video")
 			[ ! -f "$PCACHE" ] && \
-				ffmpegthumbnailer -i "$6" -o "${PCACHE}.jpg" -s 0 -q 5
+			ffmpegthumbnailer -i "$6" -o "${PCACHE}.jpg" -s 0 -q 5
 			image "$1" "$2" "$3" "$4" "$5" "${PCACHE}.jpg"
 			;;
         "epub")
 			[ ! -f "$PCACHE" ] && \
-				epub-thumbnailer "$6" "$PCACHE" 1024
+			epub-thumbnailer "$6" "$PCACHE" 1024
 			image "$1" "$2" "$3" "$4" "$5" "$PCACHE"
 			;;
         "pdf")
 			[ ! -f "${PCACHE}.jpg" ] && \
-				pdftoppm -jpeg -f 1 -singlefile "$6" "$PCACHE"
+			pdftoppm -jpeg -f 1 -singlefile "$6" "$PCACHE"
 			image "$1" "$2" "$3" "$4" "$5" "${PCACHE}.jpg"
 			;;
         "djvu")
 			[ ! -f "${PCACHE}.jpg" ] && \
-				ddjvu -format=tiff -quality=90 -page=1 "$6" "$PCACHE.jpg"
+			ddjvu -format=tiff -quality=90 -page=1 "$6" "$PCACHE.jpg"
 			image "$1" "$2" "$3" "$4" "$5" "${PCACHE}.jpg"
 			;;
         "audio")
 			[ ! -f "${PCACHE}.jpg" ] && \
-				ffmpeg -hide_banner -i "$6" "${PCACHE}.jpg" -y >/dev/null
+			ffmpeg -hide_banner -i "$6" "${PCACHE}.jpg" -y >/dev/null
 			image "$1" "$2" "$3" "$4" "$5" "${PCACHE}.jpg"
 			;;
         "font")
 			[ ! -f "${PCACHE}.jpg" ] && \
-				fontpreview -i "$6" -o "${PCACHE}.jpg"
+			fontpreview -i "$6" -o "${PCACHE}.jpg"
 			image "$1" "$2" "$3" "$4" "$5" "${PCACHE}.jpg"
 			;;
         *)

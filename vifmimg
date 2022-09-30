@@ -18,6 +18,11 @@ main() {
 			FILE="$PWD/$6"
 			image "$1" "$2" "$3" "$4" "$5" "$FILE"
 			;;
+        "svg")
+			[ ! -f "$PCACHE" ] && \
+			convert -background none "$6" "${PCACHE}.png"
+			image "$1" "$2" "$3" "$4" "$5" "${PCACHE}.png"
+			;;
         "video")
 			[ ! -f "$PCACHE" ] && \
 				ffmpegthumbnailer -i "$6" -o "${PCACHE}.jpg" -s 0 -q 5

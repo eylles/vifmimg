@@ -4,6 +4,9 @@ export PCACHE="$HOME/.cache/vifm/thumbnail.$(stat --printf '%n\0%i\0%F\0%s\0%W\0
 pclear() {
 	printf '{"action": "remove", "identifier": "vifm-preview"}\n' > "$FIFO_UEBERZUG"
 }
+image_margin_top() {
+		printf '{"action": "add", "identifier": "vifm-preview", "x": "%s", "y": "%s", "width": "%s", "height": "%s", "scaler": "contain", "path": "%s"}\n' "$2" "$(( $3 + 2 ))" "$4" "$(( $5 - 2 ))" "$6" > "$FIFO_UEBERZUG"
+}
 
 image() {
 		printf '{"action": "add", "identifier": "vifm-preview", "x": "%s", "y": "%s", "width": "%s", "height": "%s", "scaler": "contain", "path": "%s"}\n' "$2" "$3" "$4" "$5" "$6" > "$FIFO_UEBERZUG"
@@ -21,7 +24,10 @@ main() {
         "svg")
 			[ ! -f "$PCACHE" ] && \
 			convert -background none "$6" "${PCACHE}.png"
-			image "$1" "$2" "$3" "$4" "$5" "${PCACHE}.png"
+			image_margin_top "$1" "$2" "$3" "$4" "$5" "${PCACHE}.png"
+			identify "$PWD/$6" | awk '{print $2,$3,$4,$5,$6,$7}'
+
+			# image "$1" "$2" "$3" "$4" "$5" "${PCACHE}.png"
 			;;
         "video")
 			[ ! -f "$PCACHE" ] && \

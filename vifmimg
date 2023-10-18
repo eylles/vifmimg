@@ -24,7 +24,7 @@ main() {
         "draw")
 			FILE="$PWD/$6"
 			image_margin_top "$1" "$2" "$3" "$4" "$5" "$FILE"
-			identify "$FILE" | awk '{print $2,$3,$4,$5,$6,$7}'
+			identify -precision 3 "$FILE" 2>/dev/null | awk '{print $2,$3,$4,$5,$6,$7}'
 			# image "$1" "$2" "$3" "$4" "$5" "$FILE"
 			;;
         "svg")

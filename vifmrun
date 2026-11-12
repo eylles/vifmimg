@@ -9,23 +9,27 @@ runvifm()
 }
 
 if [ -z "$(command -v vifm)" ]; then
-	printf "vifm isn't installed on your system!\n"
-	exit 1
+    printf "vifm isn't installed on your system!\n"
+    exit 1
 elif [ -z "$(command -v ueberzug)" ]; then
-	exec vifm "$@"
+    exec vifm "$@"
 else
-	cleanup() {
-		exec 3>&-
-	    rm "$FIFO_UEBERZUG" 2>/dev/null
-	}
-	CACHEDIR="${XDG_CACHE_HOME:-$HOME/.cache}/vifm"
-	[ ! -d "$CACHEDIR" ] && mkdir -p "$CACHEDIR"
-	export FIFO_UEBERZUG="$CACHEDIR/ueberzug-${$}"
-	mkfifo "$FIFO_UEBERZUG"
-	ueberzug layer -s <"$FIFO_UEBERZUG" -p json &
-	exec 3>"$FIFO_UEBERZUG"
-	trap cleanup EXIT
-	# vifm "$@" 3>&-
-	runvifm "$@"
-	vifmimg clear
+    cleanup() {
+        exec 3>&-
+        rm "$FIFO_UEBERZUG" 2>/dev/null
+    }
+    CACHEDIR="${XDG_CACHE_HOME:-$HOME/.cache}/vifm"
+    [ ! -d "$CACHEDIR" ] && mkdir -p "$CACHEDIR"
+    export FIFO_UEBERZUG="$CACHEDIR/ueberzug-${$}"
+    mkfifo "$FIFO_UEBERZUG"
+    ueberzug layer -s <"$FIFO_UEBERZUG" -p json &
+    exec 3>"$FIFO_UEBERZUG"
+    export use_ueberzug="yes"
+    trap cleanup EXIT
+    trap cleanup TERM
+    trap cleanup INT
+    # vifm "$@" 3>&-
+    runvifm "$@"
+    vifmimg clear
+    cleanup
 fi

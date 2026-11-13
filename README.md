@@ -24,43 +24,11 @@ All previews are cached (except for regular images) and stored in your **~/.cach
 1. Copy the **vifmimg** and **vifmrun** scripts to a folder that is included in your $PATH
 variable for easy access to the files.
 
-2. Edit your **~/.config/vifm/vifmrc** file and add fileviewer properties like so:
+2. Edit your **~/.config/vifm/vifmrc** file and add this snippet:
 ```
-    fileviewer *.pdf
-        \ vifmimg pdf %px %py %pw %ph %c
-        \ %pc
-        \ vifmimg clear
-
-    fileviewer *.djvu
-        \ vifmimg djvu %px %py %pw %ph %c
-        \ %pc
-        \ vifmimg clear
-
-    fileviewer *.epub
-        \ vifmimg epub %px %py %pw %ph %c
-        \ %pc
-        \ vifmimg clear
-
-    fileviewer <video/*>
-        \ vifmimg video %px %py %pw %ph %c
-        \ %pc
-        \ vifmimg clear
-
-    fileviewer <image/*>
-        \ vifmimg draw %px %py %pw %ph %c
-        \ %pc
-        \ vifmimg clear
-
-    fileviewer <audio/*>
-        \ vifmimg audio %px %py %pw %ph %c
-        \ %pc
-        \ vifmimg clear
-
-    fileviewer <font/*>
-        \ vifmimg font %px %py %pw %ph %c
-        \ %pc
-        \ vifmimg clear
-
+if filereadable($VIFM . '/use_ueberzug_previews.vifm')
+    source $VIFM/use_ueberzug_previews.vifm
+endif
 ```
 
 3. In order to launch vifm with image preview support from now on, you will need to use the supplied **vifmrun** script.

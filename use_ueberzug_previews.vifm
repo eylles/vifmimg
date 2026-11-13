@@ -1,0 +1,6 @@
+" use ueberzug image previews in vifm
+if $use_ueberzug == 'yes'
+  if filereadable($VIFM . '/preview/ueberzug_previews.vifm')
+    source $VIFM/preview/ueberzug_previews.vifm
+  endif
+endif
